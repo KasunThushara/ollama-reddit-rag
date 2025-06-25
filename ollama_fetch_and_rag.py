@@ -95,13 +95,15 @@ with tab2:
     if 'reddit_contents' not in st.session_state:
         st.session_state.reddit_contents = []
 
+
     def process_text_files(folder_path: str) -> List[str]:
         urls = []
         for filename in os.listdir(folder_path):
             if filename.endswith('.txt'):
-                with open(os.path.join(folder_path, filename), 'r') as f:
+                with open(os.path.join(folder_path, filename), 'r', encoding='utf-8') as f:  # ✅ FIXED HERE
                     urls.extend([line.strip() for line in f if line.strip()])
         return urls
+
 
     def fetch_reddit_posts(reddit_client, url: str):
         try:
